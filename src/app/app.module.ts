@@ -5,10 +5,12 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ProtectedComponent } from './protected/protected.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProtectedComponent
   ],
   imports: [
     BrowserModule,
