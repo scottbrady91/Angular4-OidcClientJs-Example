@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProtectedComponent } from './protected/protected.component';
+import { AuthGuardService } from './services/authguard.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { ProtectedComponent } from './protected/protected.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
