@@ -6,12 +6,15 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProtectedComponent } from './protected/protected.component';
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { AuthGuardService } from './services/authguard.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProtectedComponent
+    ProtectedComponent,
+    AuthCallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,7 @@ import { AuthGuardService } from './services/authguard.service';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthGuardService],
+  providers: [AuthGuardService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
