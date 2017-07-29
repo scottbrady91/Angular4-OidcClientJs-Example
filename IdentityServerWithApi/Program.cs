@@ -10,7 +10,8 @@ namespace IdentityServer4InMem
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
+                .UseUrls("http://localhost:5555")
+				.UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
