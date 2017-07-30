@@ -27,16 +27,16 @@ namespace IdentityServer4InMem
             loggerFactory.AddConsole();
             app.UseDeveloperExceptionPage();
 
-            app.Map("/api", builder =>
+            app.Map("/api", api =>
             {
-                builder.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+                api.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
                 {
                     Authority = "http://localhost:5555",
                     RequireHttpsMetadata = false,
                     AllowedScopes = new List<string> { "api1" }
                 });
                 
-                builder.Run(async context =>
+                api.Run(async context =>
                 {
                     await context.Authentication.ChallengeAsync("Bearer");
                     await context.Response.WriteAsync("API Response!");

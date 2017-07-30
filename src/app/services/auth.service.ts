@@ -1,65 +1,50 @@
 import { Injectable } from '@angular/core';
 
-import { UserManager, UserManagerSettings, User, WebStorageStateStore } from 'oidc-client';
+import { UserManager, UserManagerSettings, User } from 'oidc-client';
 
 @Injectable()
 export class AuthService {
-    private manager = new UserManager(getClientSettings());
+  private manager: UserManager = new UserManager(getClientSettings());
+  private user: User = null;
 
-    getUser(): Promise<User> {
-        return this.manager.getUser();
-    }
+  constructor() {
+    this.manager.getUser().then(user => {
+      this.user = user;
+    });
+  }
 
-    isLoggedIn(): Promise<boolean> {
-        return this.manager.getUser().then(user => {
-            if (user) return true;
-            else return false;
-        });
-    }
+  isLoggedIn(): boolean {
+    return this.user != null && !this.user.expired;
+  }
 
-    startAuthentication(): Promise<void> {
-        return this.manager.signinRedirect();
-    }
+  getClaims(): any {
+    return this.user.profile;
+  }
 
-    completeAuthentication(): Promise<User> {
-        return this.manager.signinRedirectCallback();
-    }
+  getAuthorizationHeaderValue(): string {
+    return `${this.user.token_type} ${this.user.access_token}`;
+  }
 
-    getClaims(): Promise<any> {
-        return this.manager.getUser().then(user => {
-            if (user) return user.profile;
-        });
-    }
+  startAuthentication(): Promise<void> {
+    return this.manager.signinRedirect();
+  }
 
-    getTokenType(): Promise<string> {
-        return this.manager.getUser().then(user => {
-            if (user) return user.token_type;
-        });
-    }
-
-    getAccessToken(): Promise<string> {
-        return this.manager.getUser().then(user => {
-            if (user) return user.access_token;
-        });
-    }
-
-    getAuthorizationHeaderValue(): Promise<string> {
-        return this.manager.getUser().then(user => {
-            if (user) return `${user.token_type} ${user.access_token}`;
-        });
-    }
+  completeAuthentication(): Promise<void> {
+    return this.manager.signinRedirectCallback().then(user => {
+      this.user = user;
+    });
+  }
 }
 
 export function getClientSettings(): UserManagerSettings {
-    return {
-        authority: 'http://localhost:5555/',
-        client_id: 'angular_spa',
-        redirect_uri: 'http://localhost:4200/auth-callback',
-        post_logout_redirect_uri: 'http://localhost:4200/',
-        response_type: "id_token token",
-        scope: "openid profile api1",
-        filterProtocolClaims: true,
-        loadUserInfo: true,
-        userStore: new WebStorageStateStore({ store: window.localStorage })
-    };
+  return {
+    authority: 'http://localhost:5555/',
+    client_id: 'angular_spa',
+    redirect_uri: 'http://localhost:4200/auth-callback',
+    post_logout_redirect_uri: 'http://localhost:4200/',
+    response_type: "id_token token",
+    scope: "openid profile api1",
+    filterProtocolClaims: true,
+    loadUserInfo: true
+  };
 }
