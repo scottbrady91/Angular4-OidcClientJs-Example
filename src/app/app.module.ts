@@ -9,12 +9,14 @@ import { ProtectedComponent } from './protected/protected.component';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { AuthGuardService } from './services/authguard.service';
 import { AuthService } from './services/auth.service';
+import { CallApiComponent } from './call-api/call-api.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProtectedComponent,
-    AuthCallbackComponent
+    AuthCallbackComponent,
+    CallApiComponent
   ],
   imports: [
     BrowserModule,

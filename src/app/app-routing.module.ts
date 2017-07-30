@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProtectedComponent } from './protected/protected.component';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
+import { CallApiComponent } from './call-api/call-api.component';
 import { AuthGuardService } from './services/authguard.service';
 
 const routes: Routes = [
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'auth-callback',
     component: AuthCallbackComponent
+  },
+  {
+    path: 'call-api',
+    component: CallApiComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 
