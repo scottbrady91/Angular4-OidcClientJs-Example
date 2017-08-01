@@ -29,6 +29,8 @@ namespace IdentityServer4InMem
 
             app.Map("/api", api =>
             {
+                api.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
                 api.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
                 {
                     Authority = "http://localhost:5555",
@@ -38,7 +40,6 @@ namespace IdentityServer4InMem
                 
                 api.Run(async context =>
                 {
-                    await context.Authentication.ChallengeAsync("Bearer");
                     await context.Response.WriteAsync("API Response!");
                 });
             });
