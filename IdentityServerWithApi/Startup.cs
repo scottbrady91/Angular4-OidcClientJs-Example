@@ -69,7 +69,7 @@ namespace IdentityServer4InMem
                 ClientName = "Angular 4 Client",
                 AllowedGrantTypes = GrantTypes.Implicit,
                 AllowedScopes = new List<string> {"openid", "profile", "api1"},
-                RedirectUris = new List<string> {"http://localhost:4200/auth-callback"},
+                RedirectUris = new List<string> {"http://localhost:4200/auth-callback", "http://localhost:4200/silent-refresh.html"},
                 PostLogoutRedirectUris = new List<string> {"http://localhost:4200/"},
                 AllowedCorsOrigins = new List<string> {"http://localhost:4200"},
                 AllowAccessTokensViaBrowser = true
