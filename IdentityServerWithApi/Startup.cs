@@ -79,7 +79,9 @@ namespace IdentityServer4InMem
             {
                 ClientId = "angular_spa",
                 ClientName = "Angular 4 Client",
-                AllowedGrantTypes = GrantTypes.Implicit,
+                AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
+                RequireClientSecret = false,
                 AllowedScopes = new List<string> {"openid", "profile", "api1"},
                 RedirectUris = new List<string> {"http://localhost:4200/auth-callback", "http://localhost:4200/silent-refresh.html"},
                 PostLogoutRedirectUris = new List<string> {"http://localhost:4200/"},
