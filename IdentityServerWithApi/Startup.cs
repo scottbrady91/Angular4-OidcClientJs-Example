@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using IdentityServer4.Models;
+using IdentityServer4.Quickstart.UI;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 
 namespace IdentityServer4InMem
@@ -20,6 +21,14 @@ namespace IdentityServer4InMem
                 .AddInMemoryApiResources(apiResources)
                 .AddInMemoryClients(clients)
                 .AddTestUsers(TestUsers.Users);
+
+            services.AddAuthentication()
+                .AddIdentityServerAuthentication("api", options =>
+                {
+                    options.Authority = "http://localhost:5555";
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "api1";
+                });
         }
         
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -30,16 +39,17 @@ namespace IdentityServer4InMem
             app.Map("/api", api =>
             {
                 api.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
-                api.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
-                {
-                    Authority = "http://localhost:5555",
-                    RequireHttpsMetadata = false,
-                    AllowedScopes = new List<string> { "api1" }
-                });
+                api.UseAuthentication();
                 
                 api.Run(async context =>
                 {
+                    var result = await context.AuthenticateAsync("api");
+                    if (!result.Succeeded)
+                    {
+                        context.Response.StatusCode = 401;
+                        return;
+                    }
+
                     await context.Response.WriteAsync("API Response!");
                 });
             });
