@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 
 import { AuthService } from '../services/auth.service';
 
@@ -15,15 +14,10 @@ export class CallApiComponent implements OnInit {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit() {
-    let headers = new HttpHeaders({
-      'Authorization': this.authService.getAuthorizationHeaderValue(),
-      responseType: 'text'
-    })
+    let headers = new HttpHeaders({ 'Authorization': this.authService.getAuthorizationHeaderValue() });
 
     this.http.get<any>("http://localhost:5555/api", { headers: headers })
-      .subscribe(
-        response => this.response = response,
-        err => console.log("angular is trash"));
+      .subscribe(response => this.response = response);
   }
 
 }
