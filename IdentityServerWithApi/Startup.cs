@@ -6,6 +6,7 @@ using IdentityServer4.Models;
 using IdentityServer4.Quickstart.UI;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace IdentityServer4InMem
 {
@@ -50,7 +51,8 @@ namespace IdentityServer4InMem
                         return;
                     }
 
-                    await context.Response.WriteAsync("API Response!");
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject("API Response!"));
                 });
             });
 
