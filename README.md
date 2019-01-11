@@ -8,7 +8,7 @@ OpenID Connect integration with Angular CLI and oidc-client-js.
 
 - [Silent Refresh - Refreshing Access Tokens when using the Implicit Flow](https://www.scottbrady91.com/OpenID-Connect/Silent-Refresh-Refreshing-Access-Tokens-when-using-the-Implicit-Flow)
 
-- [Angular using the OpenID Connect Authorization Code Flow and PKCE](https://www.scottbrady91.com/Angular/Angular-using-the-OpenID-Connect-Authorization-Code-Flow-and-PKCE)
+- [Migrating oidc-client-js to use the OpenID Connect Authorization Code Flow and PKCE](https://www.scottbrady91.com/Angular/Migrating-oidc-client-js-to-use-the-OpenID-Connect-Authorization-Code-Flow-and-PKCE)
 
 ## Branches
 
